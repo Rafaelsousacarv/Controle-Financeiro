@@ -1,5 +1,7 @@
 ![](https://i.imgur.com/xG74tOh.png)
 
+## Nome da dupla: Rafael S. C. D. Silva e Paulo R. A. D. Santos
+
 # Desafio Módulo 3 - Backend
 
 Seu papel é construir uma RESTful API que permita:
