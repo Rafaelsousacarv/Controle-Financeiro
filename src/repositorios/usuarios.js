@@ -19,7 +19,7 @@ const encontrarUsuarioPeloEmail = (email) => {
   const usuarioEncontrado = pool.query(
     `
       SELECT
-          id, email, senha
+          id, nome, email, senha
       FROM 
           usuarios
       WHERE

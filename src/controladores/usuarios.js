@@ -56,7 +56,16 @@ const logarUsuario = async (req, res) => {
     const token = sign({ id: usuariosEncontrados[0].id }, senhaToken, {
       expiresIn: "8h",
     });
-    return res.status(200).json({ token });
+    delete usuariosEncontrados[0].senha;
+    const usuarioLogado = {
+      usuarios: {
+      id: usuariosEncontrados[0].id,
+      nome: usuariosEncontrados[0].nome,
+      email: usuariosEncontrados[0].email
+      },
+      token: token
+    }
+    return res.status(200).json(usuarioLogado);
   } catch (error) {
     console.log(error.mensage);
     return res.status(500).json({ mensagem: "Erro interno no servidor" });
