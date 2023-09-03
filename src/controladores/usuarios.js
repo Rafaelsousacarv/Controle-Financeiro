@@ -67,12 +67,17 @@ const logarUsuario = async (req, res) => {
     }
     return res.status(200).json(usuarioLogado);
   } catch (error) {
-    console.log(error.mensage);
     return res.status(500).json({ mensagem: "Erro interno no servidor" });
   }
 };
 
+const detalharUsuario = (req, res) => {
+  return res.status(200).json(req.usuarioCadastrado);
+}
+
+
 module.exports = {
   cadastrarUsuario,
   logarUsuario,
+  detalharUsuario
 };

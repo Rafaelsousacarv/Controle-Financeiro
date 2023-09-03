@@ -30,7 +30,23 @@ const encontrarUsuarioPeloEmail = (email) => {
   return usuarioEncontrado;
 };
 
+const encontrarUsuarioPeloId = (id) => {
+  const usuarioEncontrado = pool.query(
+    `
+      SELECT
+          id, nome, email
+      FROM 
+          usuarios
+      WHERE
+          id = $1;
+  `,
+    [id]
+  );
+  return usuarioEncontrado;
+};
+
 module.exports = {
   cadastrarUsuario,
-  encontrarUsuarioPeloEmail
+  encontrarUsuarioPeloEmail,
+  encontrarUsuarioPeloId,
 };
