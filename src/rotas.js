@@ -1,5 +1,5 @@
 const express = require("express");
-const { cadastrarUsuario } = require("./controladores/usuarios");
+const { cadastrarUsuario, logarUsuario } = require("./controladores/usuarios");
 const rotas = express();
 
 rotas.get("/", (req, res) => {
@@ -7,5 +7,6 @@ rotas.get("/", (req, res) => {
 });
 
 rotas.post("/usuario", cadastrarUsuario);
+rotas.post("/login", logarUsuario);
 
 module.exports = rotas;

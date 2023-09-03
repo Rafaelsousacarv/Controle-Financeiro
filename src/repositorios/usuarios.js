@@ -15,6 +15,22 @@ const cadastrarUsuario = (dadosDoUsuario) => {
   return usuarioCadastrado;
 };
 
+const encontrarUsuarioPeloEmail = (email) => {
+  const usuarioEncontrado = pool.query(
+    `
+      SELECT
+          id, email, senha
+      FROM 
+          usuarios
+      WHERE
+          email = $1;
+  `,
+    [email]
+  );
+  return usuarioEncontrado;
+};
+
 module.exports = {
   cadastrarUsuario,
+  encontrarUsuarioPeloEmail
 };
