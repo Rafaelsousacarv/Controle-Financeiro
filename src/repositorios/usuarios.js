@@ -45,8 +45,22 @@ const encontrarUsuarioPeloId = (id) => {
   return usuarioEncontrado;
 };
 
+const atualizarUsuario = (dadosDoUsuario) => {
+  const { nome, email, senhaCriptografada, id } = dadosDoUsuario;
+  const usuarioAtualizado = pool.query(
+    `
+        UPDATE usuarios 
+        SET nome = $1, email = $2, senha = $3
+        WHERE id = $4
+    `,
+    [nome, email, senhaCriptografada, id]
+  );
+  return usuarioAtualizado;
+};
+
 module.exports = {
   cadastrarUsuario,
   encontrarUsuarioPeloEmail,
   encontrarUsuarioPeloId,
+  atualizarUsuario,
 };

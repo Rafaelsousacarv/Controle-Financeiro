@@ -3,6 +3,7 @@ const {
   cadastrarUsuario,
   logarUsuario,
   detalharUsuario,
+  atualizarUsuario,
 } = require("./controladores/usuarios");
 const conferirLogado = require("./intermediarios/conferirLogado");
 const rotas = express();
@@ -17,5 +18,6 @@ rotas.post("/login", logarUsuario);
 rotas.use(conferirLogado);
 
 rotas.get("/usuario", detalharUsuario);
+rotas.put("/usuario", atualizarUsuario);
 
 module.exports = rotas;

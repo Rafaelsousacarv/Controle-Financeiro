@@ -25,6 +25,9 @@ const conferirLogado = async (req, res, next) => {
     req.usuarioCadastrado = usuariosCadastrados[0];
     next();
   } catch (error) {
+    if (error.message ===  "jwt expired") {
+      return res.status(401).json({ mensagem: "Seção expirada, faça login novamente." });
+    }
     return res.status(500).json({ mensagem: "Erro interno no servidor" });
   }
 };
