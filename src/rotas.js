@@ -6,6 +6,7 @@ const {
   atualizarUsuario,
 } = require("./controladores/usuarios");
 const conferirLogado = require("./intermediarios/conferirLogado");
+const { listarCategorias } = require("./controladores/categorias");
 const rotas = express();
 
 rotas.get("/", (req, res) => {
@@ -19,5 +20,6 @@ rotas.use(conferirLogado);
 
 rotas.get("/usuario", detalharUsuario);
 rotas.put("/usuario", atualizarUsuario);
+rotas.get("/categoria", listarCategorias);
 
 module.exports = rotas;
