@@ -10,6 +10,7 @@ const { listarCategorias } = require("./controladores/categorias");
 const {
   listarTransacao,
   cadastrarTransacao,
+  detalharTransacao,
 } = require("./controladores/transacoes");
 const rotas = express();
 
@@ -28,5 +29,6 @@ rotas.get("/categoria", listarCategorias);
 
 rotas.get("/transacao", listarTransacao);
 rotas.post("/transacao", cadastrarTransacao);
+rotas.get("/transacao/:id", detalharTransacao);
 
 module.exports = rotas;
