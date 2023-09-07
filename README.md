@@ -1,4 +1,4 @@
-![](https://i.imgur.com/xG74tOh.png).
+![](https://i.imgur.com/xG74tOh.png)
 
 ## Nome da dupla: Rafael S. C. D. Silva e Paulo R. A. D. Santos
 
