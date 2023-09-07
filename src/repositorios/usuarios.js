@@ -58,46 +58,9 @@ const atualizarUsuario = (dadosDoUsuario) => {
   return usuarioAtualizado;
 };
 
-const cadastrarTransacao = (dadosDaTransacao) => {
-  const { senhaCriptografada, descricao, valor, data, categoria_id, tipo, usuario_id } = dadosDaTransacao;
-  const transacaoCadastrada = pool.query(
-    `
-        INSERT INTO
-          transacoes (senhaCriptografada,descricao, valor, data, categoria_id, tipo, usuario_id)
-        VALUES
-          ($1, $2, $3, $4, $5, $6,$7)
-        RETURNING *
-    `,
-    [senhaCriptografada, descricao, valor, data, categoria_id, tipo, usuario_id]
-  );
-  return transacaoCadastrada;
-
-}
-const atualizarTransacao = (dadosAtualizados) => {
-  const { descricao, valor, data, categoria_id, tipo, usuario_id, id } = dadosAtualizados;
-  const cadastroAtualizado = pool.query(
-
-    `UPDATE transacoes 
-   SET descricao = $1 ,
-   valor = $2,
-   data = $3,
-   categoria_id = $4,
-   tipo = $5
-   WHERE usuario_id = $6 and id = $7
-  ($1, $2,$3,$4,$5,$6,$7)
-  RETURNING *
-`,
-    [descricao, valor, data, categoria_id, tipo, usuario_id, id]
-  );
-
-  return cadastroAtualizado
-}
-
 module.exports = {
   cadastrarUsuario,
   encontrarUsuarioPeloEmail,
   encontrarUsuarioPeloId,
   atualizarUsuario,
-  cadastrarTransacao,
-  atualizarTransacao,
 };
