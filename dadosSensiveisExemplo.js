@@ -11,5 +11,5 @@ module.exports = {
     databaseBd,
     passwordBd,
     portBd,
-    senhaToken
+    senhaToken,
 }
