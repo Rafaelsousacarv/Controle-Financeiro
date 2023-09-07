@@ -17,7 +17,7 @@ create table transacoes (
 	id serial primary key,
   descricao text,
   valor integer,
-  data date, 
+  data timestamptz, 
   categoria_id integer references categorias(id),
   usuario_id integer references usuarios(id),
   tipo text
