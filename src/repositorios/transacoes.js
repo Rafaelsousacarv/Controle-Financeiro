@@ -47,8 +47,23 @@ const detalharTransacoesPeloID = (usuario_id, transacao_id) => {
   return transacoesEncontradas;
 };
 
+const atualizarTransacaoPeloID = (transacao_id, dadosTransacao) => {
+  const { descricao, valor, data, categoria_id, tipo, usuario_id } =
+    dadosTransacao;
+    const transacaoAtualizada = pool.query(
+      `
+      UPDATE transacoes
+        SET descricao = $1, valor = $2, data = $3, categoria_id = $4, tipo = $5, usuario_id = $6
+      WHERE id = $7
+      `,
+      [descricao, valor, data, categoria_id, tipo, usuario_id, transacao_id]
+    );
+    return transacaoAtualizada;
+}
+
 module.exports = {
   encontrarTransacoesPeloID,
   cadastrarTransacao,
   detalharTransacoesPeloID,
+  atualizarTransacaoPeloID
 };

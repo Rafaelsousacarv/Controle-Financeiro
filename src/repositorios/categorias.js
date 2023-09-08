@@ -12,6 +12,21 @@ const encontrarCategorias = () => {
     return categoriasEncontradas;
   };
 
+  const encontrarCategoriaPeloID = (id) => {
+    const categoriaEncontradas = pool.query(
+      `
+          SELECT
+              *
+          FROM 
+              categorias
+          WHERE id = $1;        
+      `,
+      [id]
+    );
+    return categoriaEncontradas;
+  };
+
   module.exports= {
-    encontrarCategorias
+    encontrarCategorias,
+    encontrarCategoriaPeloID
   }
