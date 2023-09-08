@@ -12,6 +12,7 @@ const {
   cadastrarTransacao,
   detalharTransacao,
   atualizarTransacao,
+  deletarTransacao,
 } = require("./controladores/transacoes");
 const rotas = express();
 
@@ -32,5 +33,6 @@ rotas.get("/transacao", listarTransacao);
 rotas.post("/transacao", cadastrarTransacao);
 rotas.get("/transacao/:id", detalharTransacao);
 rotas.put("/transacao/:id", atualizarTransacao);
+rotas.delete("/transacao/:id", deletarTransacao);
 
 module.exports = rotas;

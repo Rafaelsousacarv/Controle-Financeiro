@@ -32,7 +32,7 @@ const cadastrarTransacao = (dadosTransacao) => {
 
 const detalharTransacoesPeloID = (usuario_id, transacao_id) => {
   const transacoesEncontradas = pool.query(
-     `
+    `
     SELECT 
          tr.id, tr.tipo, tr.descricao, tr.valor, tr.data, tr.usuario_id, tr.categoria_id, ca.descricao categoria_nome
     FROM 
@@ -50,20 +50,33 @@ const detalharTransacoesPeloID = (usuario_id, transacao_id) => {
 const atualizarTransacaoPeloID = (transacao_id, dadosTransacao) => {
   const { descricao, valor, data, categoria_id, tipo, usuario_id } =
     dadosTransacao;
-    const transacaoAtualizada = pool.query(
-      `
+  const transacaoAtualizada = pool.query(
+    `
       UPDATE transacoes
         SET descricao = $1, valor = $2, data = $3, categoria_id = $4, tipo = $5, usuario_id = $6
       WHERE id = $7
       `,
-      [descricao, valor, data, categoria_id, tipo, usuario_id, transacao_id]
-    );
-    return transacaoAtualizada;
-}
+    [descricao, valor, data, categoria_id, tipo, usuario_id, transacao_id]
+  );
+  return transacaoAtualizada;
+};
+
+const deletarTransacaoPeloID = (id) => {
+  const transacaoDeletada = pool.query(
+    `
+        DELETE FROM 
+            transacoes
+        WHERE id = $1;        
+    `,
+    [id]
+  );
+  return transacaoDeletada;
+};
 
 module.exports = {
   encontrarTransacoesPeloID,
   cadastrarTransacao,
   detalharTransacoesPeloID,
-  atualizarTransacaoPeloID
+  atualizarTransacaoPeloID,
+  deletarTransacaoPeloID
 };

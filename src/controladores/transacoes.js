@@ -21,13 +21,12 @@ const cadastrarTransacao = async (req, res) => {
       .json({ mensagem: "Todos os campos são obrigatórios" });
   }
   try {
-    const { rowCount } =
-      await repositorioCategorias.encontrarCategoriaPeloID(
-        categoria_id
-      );
-      if (rowCount === 0) {
-        return res.status(404).json({ mensagem: "Categoria não encontrada." });
-      }
+    const { rowCount } = await repositorioCategorias.encontrarCategoriaPeloID(
+      categoria_id
+    );
+    if (rowCount === 0) {
+      return res.status(404).json({ mensagem: "Categoria não encontrada." });
+    }
     const dadosTransacao = {
       descricao,
       valor,
@@ -71,7 +70,7 @@ const atualizarTransacao = async (req, res) => {
       .json({ mensagem: "Todos os campos são obrigatórios" });
   }
   try {
-      const { rowCount: countTransacoes } =
+    const { rowCount: countTransacoes } =
       await repositorioTransacoes.detalharTransacoesPeloID(
         req.usuarioCadastrado.id,
         id
@@ -80,9 +79,7 @@ const atualizarTransacao = async (req, res) => {
       return res.status(404).json({ mensagem: "Transação não encontrada." });
     }
     const { rowCount: countCategorias } =
-    await repositorioCategorias.encontrarCategoriaPeloID(
-      categoria_id
-    );
+      await repositorioCategorias.encontrarCategoriaPeloID(categoria_id);
     if (countCategorias === 0) {
       return res.status(404).json({ mensagem: "Categoria não encontrada." });
     }
@@ -94,7 +91,25 @@ const atualizarTransacao = async (req, res) => {
       tipo,
       usuario_id: req.usuarioCadastrado.id,
     };
-      await repositorioTransacoes.atualizarTransacaoPeloID(id, dadosTransacao);
+    await repositorioTransacoes.atualizarTransacaoPeloID(id, dadosTransacao);
+    return res.status(204).send();
+  } catch (error) {
+    return res.status(500).json({ mensagem: "Erro interno no servidor" });
+  }
+};
+
+const deletarTransacao = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { rowCount } =
+      await repositorioTransacoes.detalharTransacoesPeloID(
+        req.usuarioCadastrado.id,
+        id
+      );
+    if (rowCount === 0) {
+      return res.status(404).json({ mensagem: "Transação não encontrada." });
+    }
+    await repositorioTransacoes.deletarTransacaoPeloID(id);
     return res.status(204).send();
   } catch (error) {
     console.log(error.message);
@@ -107,4 +122,5 @@ module.exports = {
   cadastrarTransacao,
   detalharTransacao,
   atualizarTransacao,
+  deletarTransacao,
 };
