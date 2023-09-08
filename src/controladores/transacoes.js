@@ -101,16 +101,42 @@ const atualizarTransacao = async (req, res) => {
 const deletarTransacao = async (req, res) => {
   const { id } = req.params;
   try {
-    const { rowCount } =
-      await repositorioTransacoes.detalharTransacoesPeloID(
-        req.usuarioCadastrado.id,
-        id
-      );
+    const { rowCount } = await repositorioTransacoes.detalharTransacoesPeloID(
+      req.usuarioCadastrado.id,
+      id
+    );
     if (rowCount === 0) {
       return res.status(404).json({ mensagem: "Transação não encontrada." });
     }
     await repositorioTransacoes.deletarTransacaoPeloID(id);
     return res.status(204).send();
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ mensagem: "Erro interno no servidor" });
+  }
+};
+
+const extratoTransacoes = async (req, res) => {
+  try {
+    const { rows: transacoesEncontradas } =
+      await repositorioTransacoes.encontrarTransacoesPeloID(
+        req.usuarioCadastrado.id
+      );
+      let entrada = 0;
+      let saida = 0;
+      for (const transacao of transacoesEncontradas) {
+        if (transacao.tipo === "entrada") {
+          entrada += transacao.valor;
+        }
+        if (transacao.tipo === "saida") {
+          saida += transacao.valor;
+        }
+      }
+    const extrato = { 
+      entrada,
+      saida
+    }
+    return res.status(200).json(extrato);
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ mensagem: "Erro interno no servidor" });
@@ -123,4 +149,5 @@ module.exports = {
   detalharTransacao,
   atualizarTransacao,
   deletarTransacao,
+  extratoTransacoes,
 };

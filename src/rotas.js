@@ -13,6 +13,7 @@ const {
   detalharTransacao,
   atualizarTransacao,
   deletarTransacao,
+  extratoTransacoes,
 } = require("./controladores/transacoes");
 const rotas = express();
 
@@ -31,6 +32,7 @@ rotas.get("/categoria", listarCategorias);
 
 rotas.get("/transacao", listarTransacao);
 rotas.post("/transacao", cadastrarTransacao);
+rotas.get("/transacao/extrato", extratoTransacoes);
 rotas.get("/transacao/:id", detalharTransacao);
 rotas.put("/transacao/:id", atualizarTransacao);
 rotas.delete("/transacao/:id", deletarTransacao);
