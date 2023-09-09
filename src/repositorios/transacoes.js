@@ -73,10 +73,37 @@ const deletarTransacaoPeloID = (id) => {
   return transacaoDeletada;
 };
 
+const encontrarTransacoesPorUsuarioECategoria = (usuarioId, categorias) => {
+
+  const filtro = pool.query(`
+    SELECT
+        tr.id,
+        tr.tipo,
+        tr.descricao,
+        tr.valor,
+        tr.data,
+        tr.usuario_id,
+        tr.categoria_id,
+        ca.descricao as categoria_nome
+    FROM
+        transacoes tr
+    JOIN
+        categorias ca ON tr.categoria_id = ca.id
+    WHERE
+        tr.usuario_id = $1
+    AND
+        ca.descricao = ANY($2::text[])
+  `,
+    [usuarioId, categorias]);
+
+  return filtro;
+};
+
 module.exports = {
   encontrarTransacoesPeloID,
   cadastrarTransacao,
   detalharTransacoesPeloID,
   atualizarTransacaoPeloID,
-  deletarTransacaoPeloID
+  deletarTransacaoPeloID,
+  encontrarTransacoesPorUsuarioECategoria
 };

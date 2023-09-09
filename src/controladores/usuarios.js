@@ -3,7 +3,7 @@ const repositorioUsuario = require("../repositorios/usuarios");
 const compararSenhas = require("../utils/conferirSenhas");
 const { sign } = require("jsonwebtoken");
 const { senhaToken } = require("../../dadosSensiveis");
-
+const { encontrarTransacoesPorUsuarioECategoria } = require('../repositorios/transacoes');
 
 
 const cadastrarUsuario = async (req, res) => {
@@ -113,10 +113,6 @@ const atualizarUsuario = async (req, res) => {
   }
 };
 
-const { encontrarTransacoesPorUsuarioECategoria } = require('../repositorios/transacoes');
-
-
-
 const filtrarTransacoesPorCategoria = async (req, res) => {
   try {
     const { usuarioCadastrado } = req;
@@ -131,6 +127,7 @@ const filtrarTransacoesPorCategoria = async (req, res) => {
     const transacoesFiltradas = await encontrarTransacoesPorUsuarioECategoria(usuarioCadastrado.id, filtro);
 
     return res.status(200).json(transacoesFiltradas);
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({ mensagem: 'Erro interno no servidor.' });

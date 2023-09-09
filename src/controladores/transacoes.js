@@ -145,7 +145,6 @@ const extratoTransacoes = async (req, res) => {
 };
 
 
-
 const filtrarTransacoesPorCategoria = async (req, res) => {
   try {
     const { usuarioCadastrado } = req;
@@ -175,5 +174,4 @@ module.exports = {
   deletarTransacao,
   extratoTransacoes,
   filtrarTransacoesPorCategoria,
-
 };
