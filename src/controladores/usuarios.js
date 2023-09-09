@@ -5,6 +5,7 @@ const { sign } = require("jsonwebtoken");
 const { senhaToken } = require("../../dadosSensiveis");
 
 
+
 const cadastrarUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
   if (!nome || !email || !senha) {
@@ -112,9 +113,34 @@ const atualizarUsuario = async (req, res) => {
   }
 };
 
+const { encontrarTransacoesPorUsuarioECategoria } = require('../repositorios/transacoes');
+
+
+
+const filtrarTransacoesPorCategoria = async (req, res) => {
+  try {
+    const { usuarioCadastrado } = req;
+    const { filtro } = req.query;
+
+
+    if (!Array.isArray(filtro)) {
+      return res.status(400).json({ mensagem: 'O parâmetro de filtro deve ser um array.' });
+    }
+
+
+    const transacoesFiltradas = await encontrarTransacoesPorUsuarioECategoria(usuarioCadastrado.id, filtro);
+
+    return res.status(200).json(transacoesFiltradas);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensagem: 'Erro interno no servidor.' });
+  }
+};
+
 module.exports = {
   cadastrarUsuario,
   logarUsuario,
   detalharUsuario,
   atualizarUsuario,
+  filtrarTransacoesPorCategoria,
 };
