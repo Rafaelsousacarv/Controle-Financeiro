@@ -144,27 +144,24 @@ const extratoTransacoes = async (req, res) => {
   }
 };
 
-
 const filtrarTransacoesPorCategoria = async (req, res) => {
   try {
     const { usuarioCadastrado } = req;
     const { filtro } = req.query;
 
-
     if (!Array.isArray(filtro)) {
       return res.status(400).json({ mensagem: 'O parâmetro de filtro deve ser um array.' });
     }
 
+    const { rows: transacoesFiltradas, rowCount } = await encontrarTransacoesPorUsuarioECategoria(usuarioCadastrado.id, filtro);
 
-    const transacoesFiltradas = await encontrarTransacoesPorUsuarioECategoria(usuarioCadastrado.id, filtro);
-
-
-    return res.status(200).json(transacoesFiltradas);
+    return res.status(200).json({ transacoes: transacoesFiltradas, rowCount });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ mensagem: 'Erro interno no servidor.' });
   }
 };
+
 
 module.exports = {
   listarTransacao,

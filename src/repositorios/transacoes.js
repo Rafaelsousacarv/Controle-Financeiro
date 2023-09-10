@@ -99,6 +99,8 @@ const encontrarTransacoesPorUsuarioECategoria = (usuarioId, categorias) => {
   return filtro;
 };
 
+
+
 module.exports = {
   encontrarTransacoesPeloID,
   cadastrarTransacao,

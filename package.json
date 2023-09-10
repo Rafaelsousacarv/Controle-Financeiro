@@ -1,4 +1,3 @@
-
 {
   "name": "desafio-backend-modulo-03-sistema-dindin-b2b-t04",
   "version": "1.0.0",
@@ -24,7 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3"
   },
-  "devDependencies": { 
+  "devDependencies": {
     "nodemon": "^3.0.1"
   }
 }
