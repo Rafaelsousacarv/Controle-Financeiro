@@ -1,14 +1,30 @@
 const repositorioTransacoes = require("../repositorios/transacoes");
 const repositorioCategorias = require("../repositorios/categorias");
-const { encontrarTransacoesPorUsuarioECategoria } = require('../repositorios/transacoes');
 
 const listarTransacao = async (req, res) => {
+  const { filtro } = req.query;
   try {
-    const { rows: transacoesEncontradas } =
-      await repositorioTransacoes.encontrarTransacoesPeloID(
-        req.usuarioCadastrado.id
-      );
-    return res.status(200).json(transacoesEncontradas);
+    if (filtro) {
+      if (!Array.isArray(filtro)) {
+        return res
+          .status(400)
+          .json({ mensagem: "O parâmetro de filtro deve ser um array." });
+      }
+
+      const { rows: transacoesEncontradas } =
+        await repositorioTransacoes.encontrarTransacoesPorUsuarioECategoria(
+          req.usuarioCadastrado.id,
+          filtro
+        );
+
+      return res.status(200).json(transacoesEncontradas);
+    } else {
+      const { rows: transacoesEncontradas } =
+        await repositorioTransacoes.encontrarTransacoesPeloID(
+          req.usuarioCadastrado.id
+        );
+      return res.status(200).json(transacoesEncontradas);
+    }
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno no servidor" });
   }
@@ -40,7 +56,7 @@ const cadastrarTransacao = async (req, res) => {
       await repositorioTransacoes.cadastrarTransacao(dadosTransacao);
     return res.status(201).json(transacoesCadastrados[0]);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({ mensagem: "Erro interno no servidor" });
   }
 };
@@ -136,8 +152,8 @@ const extratoTransacoes = async (req, res) => {
     }
     const extrato = {
       entrada,
-      saida
-    }
+      saida,
+    };
     return res.status(200).json(extrato);
   } catch (error) {
     console.log(error.message);
@@ -145,23 +161,6 @@ const extratoTransacoes = async (req, res) => {
   }
 };
 
-const filtrarTransacoesPorCategoria = async (req, res) => {
-  try {
-    const { usuarioCadastrado } = req;
-    const { filtro } = req.query;
-
-    if (!Array.isArray(filtro)) {
-      return res.status(400).json({ mensagem: 'O parâmetro de filtro deve ser um array.' });
-    }
-
-    const { rows: transacoesFiltradas } = await encontrarTransacoesPorUsuarioECategoria(usuarioCadastrado.id, filtro);
-
-    return res.status(200).json(transacoesFiltradas);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ mensagem: 'Erro interno no servidor.' });
-  }
-};
 
 module.exports = {
   listarTransacao,
@@ -170,5 +169,4 @@ module.exports = {
   atualizarTransacao,
   deletarTransacao,
   extratoTransacoes,
-  filtrarTransacoesPorCategoria,
 };

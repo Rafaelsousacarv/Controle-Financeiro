@@ -15,7 +15,6 @@ const {
   atualizarTransacao,
   deletarTransacao,
   extratoTransacoes,
-  filtrarTransacoesPorCategoria,
 } = require("./controladores/transacoes");
 const rotas = express();
 
@@ -38,6 +37,5 @@ rotas.get("/transacao/extrato", extratoTransacoes);
 rotas.get("/transacao/:id", detalharTransacao);
 rotas.put("/transacao/:id", atualizarTransacao);
 rotas.delete("/transacao/:id", deletarTransacao);
-rotas.get('/transacao', filtrarTransacoesPorCategoria);
 
 module.exports = rotas;

@@ -1,7 +1,7 @@
 const userBd = "postgres"
 const hostBd = "localhost"
 const databaseBd = "dindin"
-const passwordBd = "G@briel171213"
+const passwordBd = "123456"
 const portBd = 5432
 const senhaToken = "senhaSecreta"
 
