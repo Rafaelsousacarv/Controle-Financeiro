@@ -40,6 +40,7 @@ const cadastrarTransacao = async (req, res) => {
       await repositorioTransacoes.cadastrarTransacao(dadosTransacao);
     return res.status(201).json(transacoesCadastrados[0]);
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ mensagem: "Erro interno no servidor" });
   }
 };
@@ -153,15 +154,14 @@ const filtrarTransacoesPorCategoria = async (req, res) => {
       return res.status(400).json({ mensagem: 'O parâmetro de filtro deve ser um array.' });
     }
 
-    const { rows: transacoesFiltradas, rowCount } = await encontrarTransacoesPorUsuarioECategoria(usuarioCadastrado.id, filtro);
+    const { rows: transacoesFiltradas } = await encontrarTransacoesPorUsuarioECategoria(usuarioCadastrado.id, filtro);
 
-    return res.status(200).json({ transacoes: transacoesFiltradas, rowCount });
+    return res.status(200).json(transacoesFiltradas);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ mensagem: 'Erro interno no servidor.' });
   }
 };
-
 
 module.exports = {
   listarTransacao,
